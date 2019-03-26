@@ -33,10 +33,11 @@ mysqldump \
   "${SRC_NAME}" \
   > /sql/dump.sql
 
-while ! mysqladmin ping -h "${DEST_HOST}" --silent; do
-    echo -e "MySQL server at ${DEST_HOST} not ready, trying again later..."
-    sleep 1
+while ! mysqladmin --user=${DEST_USER} --password=${DEST_PASS} --host ${DEST_HOST} ping --silent; do
+     echo -e "MySQL server at ${DEST_HOST} not ready, trying again later..."
+     sleep 2
 done
+
 
 echo -e "Clearing destination database."
 mysqldump \
